@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Эрмек & Гулина | Тойго чакыруу</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --cream: #f8f1e5;
+      --paper: #fffaf2;
+      --gold: #b18a45;
+      --dark-gold: #80602f;
+      --light-gold: #d9c18e;
+      --text: #554733;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: "Montserrat", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        linear-gradient(
+          45deg,
+          rgba(177, 138, 69, 0.08) 25%,
+          transparent 25%
+        ),
+        linear-gradient(
+          -45deg,
+          rgba(177, 138, 69, 0.08) 25%,
+          transparent 25%
+        );
+      background-size: 20px 20px;
+    }
+
+    h1,
+    h2,
+    h3,
+    .names,
+    .date-number {
+      font-family: "Cormorant Garamond", serif;
+    }
+
+    section {
+      width: 100%;
+      max-width: 900px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 45px 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .frame {
+      width: 100%;
+      min-height: 80vh;
+      padding: 65px 28px;
+      text-align: center;
+      position: relative;
+      background: rgba(255, 250, 242, 0.7);
+      border: 1px solid var(--gold);
+      outline: 1px solid var(--light-gold);
+      outline-offset: -10px;
+      box-shadow: 0 15px 45px rgba(80, 55, 20, 0.08);
+    }
+
+    .frame::before {
+      content: "༺ ✦ ༻";
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      color: var(--gold);
+      font-size: 25px;
+      letter-spacing: 5px;
+    }
+
+    .frame::after {
+      content: "༺ ✦ ༻";
+      position: absolute;
+      right: 20px;
+      bottom: 15px;
+      color: var(--gold);
+      font-size: 25px;
+      letter-spacing: 5px;
+    }
+
+    .small-title {
+      color: var(--dark-gold);
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      color: var(--dark-gold);
+      font-size: clamp(45px, 10vw, 90px);
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    h2 {
+      color: var(--dark-gold);
+      font-size: clamp(40px, 8vw, 70px);
+      font-weight: 500;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      color: var(--dark-gold);
+      font-size: 30px;
+      font-weight: 500;
+    }
+
+    p {
+      max-width: 600px;
+      margin: 18px auto;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .ornament {
+      color: var(--gold);
+      font-size: 27px;
+      margin: 25px 0;
+      letter-spacing: 5px;
+    }
+
+    .names {
+      color: var(--gold);
+      font-size: clamp(50px, 11vw, 100px);
+      line-height: 0.95;
+      margin: 30px 0;
+    }
+
+    .and {
+      display: block;
+      color: var(--dark-gold);
+      font-size: 36px;
+      margin: 13px 0;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 15px 28px;
+      margin-top: 25px;
+      color: var(--dark-gold);
+      background: transparent;
+      border: 1px solid var(--gold);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .button:hover {
+      color: white;
+      background: var(--gold);
+    }
+
+    /* КОНВЕРТ */
+
+    .envelope-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+      background: var(--cream);
+      transition: 0.8s ease;
+    }
+
+    .envelope-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .envelope-content {
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+    }
+
+    .envelope {
+      width: 280px;
+      height: 190px;
+      margin: 35px auto;
+      position: relative;
+      background: #ead5a8;
+      border: 1px solid var(--gold);
+      box-shadow: 0 18px 45px rgba(70, 45, 15, 0.2);
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .envelope:hover {
+      transform: translateY(-5px);
+    }
+
+    .envelope::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        145deg,
+        transparent 49%,
+        #c9a66a 50%,
+        transparent 51%
+      );
+    }
+
+    .envelope::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        35deg,
+        transparent 49%,
+        #f7e9c9 50%,
+        transparent 51%
+      );
+    }
+
+    .seal {
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      z-index: 2;
+      top: 65px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      border: 2px solid #f8e8bd;
+      background: var(--gold);
+      color: white;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 23px;
+    }
+
+    /* ДАТА */
+
+    .date-box {
+      max-width: 550px;
+      margin: 35px auto;
+      padding: 28px 15px;
+      border-top: 1px solid var(--gold);
+      border-bottom: 1px solid var(--gold);
+    }
+
+    .date-number {
+      color: var(--gold);
+      font-size: clamp(43px, 9vw, 75px);
+    }
+
+    .date-month {
+      color: var(--dark-gold);
+      font-size: 18px;
+      letter-spacing: 3px;
+      margin-top: 8px;
+    }
+
+    .time {
+      color: var(--dark-gold);
+      font-size: 25px;
+      letter-spacing: 5px;
+      margin-top: 18px;
+    }
+
+    /* МААЛЫМАТ КАРТОЧКАЛАРЫ */
+
+    .info-card {
+      max-width: 620px;
+      width: 100%;
+      margin: 15px auto;
+      padding: 25px;
+      border: 1px solid var(--light-gold);
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .info-label {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    /* ГАЛЕРЕЯ */
+
+    .gallery {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .gallery-item {
+      padding: 8px;
+      background: var(--paper);
+      border: 1px solid var(--light-gold);
+    }
+
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+    }
+
+    /* RSVP */
+
+    .rsvp-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .rsvp-button {
+      padding: 15px 25px;
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--dark-gold);
+      font-family: "Montserrat", sans-serif;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .rsvp-button:hover,
+    .rsvp-button.active {
+      color: white;
+      background: var(--gold);
+    }
+
+    #rsvpMessage {
+      min-height: 30px;
+      margin-top: 25px;
+      color: var(--dark-gold);
+      font-size: 14px;
+    }
+
+    /* МУЗЫКА */
+
+    .music-button {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 100;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      background: var(--paper);
+      color: var(--gold);
+      font-size: 21px;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* АНИМАЦИЯ */
+
+    .fade {
+      animation: fadeIn 1.2s ease both;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ТЕЛЕФОН ҮЧҮН */
+
+    @media (max-width: 600px) {
+      section {
+        padding: 25px 12px;
+      }
+
+      .frame {
+        padding: 55px 17px;
+      }
+
+      p {
+        font-size: 13px;
+        line-height: 1.9;
+      }
+
+      .gallery {
+        gap: 10px;
+      }
+
+      .envelope {
+        width: 250px;
+        height: 170px;
+      }
+
+      .seal {
+        top: 55px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================= -->
+  <!-- 1. АЧЫЛУУЧУ КОНВЕРТ -->
+  <!-- ============================= -->
+
+  <div class="envelope-screen" id="envelopeScreen">
+
+    <div class="envelope-content fade">
+
+      <div class="small-title">
+        Сиздерге өзгөчө чакыруу
+      </div>
+
+      <h1>Тойго чакыруу</h1>
+
+      <div class="ornament">
+        ༺ ✦ ༻
+      </div>
+
+      <div
+        class="envelope"
+        id="openEnvelope"
+        aria-label="Конвертти ачуу"
+      >
+        <div class="seal">
+          Э & Г
+        </div>
+      </div>
+
+      <p>
+        Чакыруу катын ачуу үчүн конвертти басыңыз
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- ============================= -->
+  <!-- 2. МУЗЫКА -->
+  <!-- ============================= -->
+
+  <audio id="weddingMusic" loop>
+    <source
+      src="music/wedding-music.mp3"
+      type="audio/mpeg"
+    >
+  </audio>
+
+  <button
+    class="music-button"
+    id="musicButton"
+    aria-label="Музыканы күйгүзүү же өчүрүү"
+  >
+    ♫
+  </button>
+
+  <!-- ============================= -->
+  <!-- 3. БАШКЫ БӨЛҮМ -->
+  <!-- ============================= -->
+
+  <section id="home">
+
+    <div class="frame fade">
+
+      <div class="small-title">
+        Сүйүүбүздүн эң сонун күнү
+      </div>
+
+      <h1>Тойго чакыруу</h1>
+
+      <div class="ornament">
+        ༺ ✦ ༻
+      </div>
+
+      <p>
+        Урматтуу туугандар, достор жана жакындарыбыз!
+        Сиздерди биздин өзгөчө күнүбүздүн күбөсү
+        болууга чакырабыз.
+      </p>
+
+      <div class="names">
+        Эрмек
+
+        <span class="and">&</span>
+
+        Гулина
+      </div>
+
+      <p>
+        Кубанычыбызды сиздер менен бирге бөлүшкүбүз келет.
+      </p>
+
+      <a href="#couple" class="button">
+        Чакырууны ачуу
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- ============================= -->
+  <!-- 4. БИЗДИН ЖУБАЙЛАР -->
+  <!-- ============================= -->
+
+  <section id="couple">
+
+    <div class="frame">
+
+      <div class="small-title">
+        Биздин өзгөчө күн
+      </div>
+
+      <h2>Биздин жубайлар</h2>
+
+      <div class="ornament">
+        ༺ ✦ ༻
+      </div>
+
+      <p>
+        Эки жүрөк, бир тагдыр жана бир чоң сүйүү.
+        Биздин жаңы жашообуздун башталышына
+        күбө болуңуздар.
+      </p>
+
+      <div class="names">
+        Эрмек
+
+        <span class="and">&</span>
+
+        Гулина
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ============================= -->
+  <!-- 5. ТОЙДУН КҮНҮ ЖАНА УБАКТЫСЫ -->
+  <!-- ============================= -->
+
+  <section id="date">
+
+    <div class="frame">
+
+      <div class="small-title">
+        Тойдун күнү
+      </div>
+
+      <h2>Күнү жана убактысы</h2>
+
+      <div class="ornament">
+        ༺ ✦ ༻
+      </div>
+
+      <div class="date-box">
+
+        <div class="date-number">
+          29.09.2026
+        </div>
+
+        <div class="date-month">
+          СЕНТЯБРЬ
+        </div>
+
+        <div class="time">
+          17:00
+        </div>
+
+      </div>
+
+      <p>
+        Бул өзгөчө күнү биз менен бирге болуңуздар!
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- ============================= -->
+  <!-- 6. ТОЙ ЭЭЛЕРИ -->
+  <!-- ============================= -->
+
+  <section id="hosts">
+
+    <div class="frame">
+
+      <div class="small-title">
+        Той ээлери
+      </div>
+
+      <h2>Той ээлери</h2>
+
+      <div class="ornament">
+        ༺ ✦ ༻
+      </div>
+
+      <div class="names" style="font-size: 58px;">
+
+        Кутман
+
+        <span class="and">&</span>
+
+        Гулира
+
+      </div>
+
+      <p>
+        Ак батасын берип, бизди ушул кубанычтуу күнгө
+        жеткирген ата-энелерибизге терең ыраазычылык
+        билдиребиз.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- ============================= -->
+  <!-- 7. ТОЙ ӨТҮҮЧҮ ЖАЙ -->
+  <!-- ============================= -->
+
+  <section id="venue">
+
+    <div class="frame">
+
+      <div class="small-title">
+        Той өтүүчү жай
+      </div>
+
+      <h2>Сиздерди күтөбүз</h2>
+
+      <div class="ornament">
+        ༺ ✦ ༻
+      </div>
+
+      <div class="info-card">
+
+        <div class="info-label">
+          КАФЕ
+        </div>
+
+        <h3>
+          «БАКЫТ ОРДОСУ» кафеси
+        </h3>
+
+        <p>
+          Кызыл-Жар
+        </p>
+
+      </div>
+
+      <div class="info-card">
+
+        <div class="info-label">
+          УБАКЫТЫ
+        </div>
+
+        <h3>
+          17:00
+        </h3>
+
+        <p>
+          29-сентябрь 2026-жыл
+        </p>
+
+      </div>
+
+      <a
+        class="button"
+        href="https://www.google.com/maps/search/?api=1&query=БАКЫТ+ОРДОСУ+Кызыл-Жар"
+        target="_blank"
+        rel="noopener"
+      >
+        Жолду көрсөтүү
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- ============================= -->
+  <!-- 8. СҮРӨТТӨР ГАЛЕРЕЯСЫ -->
+  <!-- ============================= -->
+
+  <section id="gallery">
+
+    <div class="frame">
+
+      <div class="small-title">
+        Эскерүүлөр
+      </div>
+
+      <h2>Сүрөттөр галереясы</h2>
+
+      <div class="ornament">
+        ༺ ✦ ༻
+      </div>
+
+      <div class="gallery">
+
+        <div class="gallery-item">
+          <img
+            src="images/gallery-1.jpg"
+            alt="Жубайлардын сүрөтү 1"
+          >
+        </div>
+
+        <div class="gallery-item">
+          <img
+            src="images/gallery-2.jpg"
+            alt="Жубайлардын сүрөтү 2"
+          >
+        </div>
+
+        <div class="gallery-item">
+          <img
+            src="images/gallery-3.jpg"
+            alt="Жубайлардын сүрөтү 3"
+          >
+        </div>
+
+        <div class="gallery-item">
+          <img
+            src="images/gallery-4.jpg"
+            alt="Жубайлардын сүрөтү 4"
+          >
+        </div>
+
+        <div class="gallery-item">
+          <img
+            src="images/gallery-5.jpg"
+            alt="Жубайлардын сүрөтү 5"
+          >
+        </div>
+
+        <div class="gallery-item">
+          <img
+            src="images/gallery-6.jpg"
+            alt="Жубайлардын сүрөтү 6"
+          >
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ============================= -->
+  <!-- 9. RSVP -->
+  <!-- ============================= -->
+
+  <section id="rsvp">
+
+    <div class="frame">
+
+      <div class="small-title">
+        Келериңизди ырастоо
+      </div>
+
+      <h2>RSVP</h2>
+
+      <div class="ornament">
+        ༺ ✦ ༻
+      </div>
+
+      <p>
+        Урматтуу коноктор!
+        Тойго келериңиздерди алдын ала билдирип
+        коюуңуздарды суранабыз.
+      </p>
+
+      <div class="rsvp-buttons">
+
+        <button
+          class="rsvp-button"
+          data-answer="Келемин"
+        >
+          Келемин
+        </button>
+
+        <button
+          class="rsvp-button"
+          data-answer="Келе албайм"
+        >
+          Келе албайм
+        </button>
+
+      </div>
+
+      <div id="rsvpMessage"></div>
+
+    </div>
+
+  </section>
+
+  <!-- ============================= -->
+  <!-- 10. АКЫРКЫ ЧАКЫРЫК -->
+  <!-- ============================= -->
+
+  <section id="final">
+
+    <div class="frame">
+
+      <div class="ornament">
+        ༺ ✦ ༻
+      </div>
+
+      <h2>
+        Сиздерди күтөбүз!
+      </h2>
+
+      <p>
+        Келип, биздин кубанычыбызды тең бөлүшүп,
+        тилегиңиздерди айтып кетсеңиздер,
+        биз үчүн чоң бакыт.
+      </p>
+
+      <div class="names" style="font-size: 52px;">
+        Эрмек & Гулина
+      </div>
+
+      <p>
+        29.09.2026 | 17:00
+        <br>
+        «БАКЫТ ОРДОСУ» кафеси
+      </p>
+
+      <div class="ornament">
+        ༺ ✦ ༻
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ============================= -->
+  <!-- JAVASCRIPT -->
+  <!-- ============================= -->
+
+  <script>
+
+    /* КОНВЕРТТИ АЧУУ */
+
+    const envelopeScreen =
+      document.getElementById("envelopeScreen");
+
+    const openEnvelope =
+      document.getElementById("openEnvelope");
+
+    const music =
+      document.getElementById("weddingMusic");
+
+    const musicButton =
+      document.getElementById("musicButton");
+
+    let musicPlaying = false;
+
+    openEnvelope.addEventListener("click", function () {
+
+      envelopeScreen.classList.add("hidden");
+
+      music.play()
+        .then(function () {
+
+          musicPlaying = true;
+          musicButton.textContent = "Ⅱ";
+
+        })
+        .catch(function () {
+
+          musicPlaying = false;
+
+        });
+
+    });
+
+
+    /* МУЗЫКАНЫ КҮЙГҮЗҮҮ / ӨЧҮРҮҮ */
+
+    musicButton.addEventListener("click", function () {
+
+      if (musicPlaying) {
+
+        music.pause();
+
+        musicPlaying = false;
+
+        musicButton.textContent = "♫";
+
+      } else {
+
+        music.play()
+          .then(function () {
+
+            musicPlaying = true;
+            musicButton.textContent = "Ⅱ";
+
+          })
+          .catch(function () {
+
+            alert(
+              "Музыка файлын music/wedding-music.mp3 аты менен жүктөңүз."
+            );
+
+          });
+
+      }
+
+    });
+
+
+    /* RSVP КНОПКАЛАРЫ */
+
+    const rsvpButtons =
+      document.querySelectorAll(".rsvp-button");
+
+    const rsvpMessage =
+      document.getElementById("rsvpMessage");
+
+    rsvpButtons.forEach(function (button) {
+
+      button.addEventListener("click", function () {
+
+        rsvpButtons.forEach(function (item) {
+
+          item.classList.remove("active");
+
+        });
+
+        button.classList.add("active");
+
+        const answer =
+          button.getAttribute("data-answer");
+
+        rsvpMessage.textContent =
+          "Сиздин жообуңуз: " + answer;
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
